@@ -2,7 +2,7 @@
 #include<stdint.h>
 #include<string.h>
 #include<stdlib.h>
-// Hello
+// Hello git ABC
 FILE *ConvFrTxtFile(uint32_t *row); // Tạo và đọc địa chỉ file TXT đã xóa comment
 struct Link
 {   int size_of_data ;
@@ -23,7 +23,7 @@ int main(void)
     fptest =ConvFrTxtFile(&row);
     ConvFrList(fptest,row);
     ListFinal();
-     BranchWithFirst_F();
+     //BranchWithFirst_F();
     p = First_F ;
     while(p != NULL)
     {
@@ -95,7 +95,7 @@ void ConvFrList(FILE *fopen,uint32_t Row_Of_File)
              p = (LinkList *)malloc(sizeof(LinkList));
              p->next = NULL ;
               p->data = (char *)calloc(20, sizeof(char));
-              int count = 0 ; // Tính size data thực
+              int count = 0 ; // Tính size data thựcj
               for (int x= 0 ; x<20;x++)
               {     
                    
@@ -114,20 +114,9 @@ void ConvFrList(FILE *fopen,uint32_t Row_Of_File)
                     }
 
                 if(arr[k] == '\n'  ) 
-                   {    if (count !=1 ) // Xuống dòng nhưng chưa kết thúc 1 Network
-                        {
-                            (p->data)[x]=' ';
-                            (p->data)[x+1]=')';
-                            (p->data)[x+2]=' ';
-                            (p->data)[x+3]='(';
-                            count = count +4 ;
-                            p->size_of_data = count ;
-                            break ;
-                        }
-                        // Kết thúc 1 Net Work thì thêm '('
-                        (p->data)[x]=' ';
-                        (p->data)[x+1]='(';
-                        p->size_of_data = count +2 ;
+                   {   
+
+                        p->size_of_data = count;
                         break ;
                    }
                 (p->data)[x]=arr[k];
@@ -266,12 +255,6 @@ void BranchWithFirst_F(void)
     int a = 0 ;
     while(p !=NULL)
     {       
-            if (p == Last_F)  // Xóa ký tự '(' cuối đi
-            {   
-                
-                Last_F = k ;
-                k->next = NULL ;
-            }
            if (p == First_F) // Thêm ký tự '(' vào đầu
         {
             k = (LinkList *)malloc(sizeof(LinkList));
@@ -282,59 +265,7 @@ void BranchWithFirst_F(void)
             p->prev = k ;
             k->prev = NULL ;
             First_F =k ;
-        }
-        while(found == 0 && p->next != NULL) // Kiểm tra xem đã tìm đc "N" chưa
-        {
-            if(p->size_of_data == 1 && strncmp(p->data,"N",1) == 0)
-            {
-                found = 1 ;
-            }
-            else
-            {   
-                r = k ;
-                k = p ;
-                p = p->next ;
-            }
-        }
-        if(found == 1) // (
-        {   int temp1 = 0, temp2 = 0 ;LinkList *a,*b ;
-            z = r->prev ;
-            z->next = p ;
-            p->prev = z ;
-            free(r) ;
-            free(k); // Xóa ký tự '(' trước dữ liệu "N" đi
-            k= p ;
-            while(found ==1)
-            {
-                if(temp1 ==0)
-                {    
-                    p= p->prev ;
-                   
-                }
-                while(temp2 ==0 )
-               {
-                    if(strncmp(p->data,"(",1) == 0) 
-                    {
-                        temp2 =1 ;
-                    }
-                    else
-                    {
-                        a= p ;
-                        p = p->prev ;
-                    }
-               }
-               if(temp2 ==1)
-               {    b= p->prev ;
-                    a->prev =b;
-                    b->next = a ;
-                    found = 0 ;
-               }
-            }
-            p = k ;
-        }
-        p= p->next ;
-    } 
-    
+        }         
 }
 
 
